@@ -1,6 +1,7 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import Cart from './pages/Cart.js';
 
 const Cart = () => {
   const { cart } = useCart();

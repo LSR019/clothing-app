@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
-import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useCart(); // ✅ added remove
+  const { cart, removeFromCart } = useCart();
+  const [showPopup, setShowPopup] = useState(false); // ✅ popup state
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
@@ -88,8 +88,34 @@ const Cart = () => {
       marginTop: "50px",
       fontSize: "1.2rem",
     },
-    link: {
-      textDecoration: "none",
+
+    // ✅ POPUP STYLES
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    popup: {
+      background: "white",
+      padding: "25px",
+      borderRadius: "10px",
+      textAlign: "center",
+      width: "300px",
+    },
+    popupBtn: {
+      marginTop: "15px",
+      padding: "8px 15px",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      background: "#ff3f6c",
+      color: "white",
     },
   };
 
@@ -117,7 +143,6 @@ const Cart = () => {
                   <p style={styles.name}>{item.name}</p>
                   <p style={styles.price}>₹{item.price}</p>
 
-                  {/* ✅ REMOVE BUTTON */}
                   <button
                     style={styles.removeBtn}
                     onClick={() => removeFromCart(index)}
@@ -134,9 +159,30 @@ const Cart = () => {
             <p>Total Items: {cart.length}</p>
             <h2 style={{ marginTop: "10px" }}>₹{total}</h2>
 
-            <Link to="/checkout" style={styles.link}>
-              <button style={styles.button}>Proceed to Checkout</button>
-            </Link>
+            {/* ✅ POPUP TRIGGER */}
+            <button
+              style={styles.button}
+              onClick={() => setShowPopup(true)}
+            >
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ POPUP UI */}
+      {showPopup && (
+        <div style={styles.overlay}>
+          <div style={styles.popup}>
+            <h3>Order Placed 🎉</h3>
+            <p>Your order has been successfully placed.</p>
+
+            <button
+              style={styles.popupBtn}
+              onClick={() => setShowPopup(false)}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

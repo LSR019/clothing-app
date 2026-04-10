@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
-  const { cart } = useCart(); // ✅ get cart
+  const { cart } = useCart();
 
   const styles = {
     nav: {
@@ -23,14 +23,14 @@ const Navbar = () => {
     },
     links: {
       display: "flex",
-      gap: "25px",
+      gap: "20px",
       alignItems: "center",
     },
     link: {
       textDecoration: "none",
       color: "white",
       fontSize: "1rem",
-      padding: "5px 10px",
+      padding: "6px 12px",
       borderRadius: "5px",
       transition: "all 0.3s ease",
     },
@@ -44,13 +44,13 @@ const Navbar = () => {
   };
 
   const handleHover = (e) => {
-    e.target.style.background = "white";
-    e.target.style.color = "black";
+    e.currentTarget.style.background = "white";
+    e.currentTarget.style.color = "black";
   };
 
   const handleLeave = (e) => {
-    e.target.style.background = "transparent";
-    e.target.style.color = "white";
+    e.currentTarget.style.background = "transparent";
+    e.currentTarget.style.color = "white";
   };
 
   return (
@@ -58,15 +58,68 @@ const Navbar = () => {
       <h2 style={styles.logo}>Clothing Store</h2>
 
       <div style={styles.links}>
-        <Link to="/login">Login</Link>
-<Link to="/signup">Signup</Link>
-        <Link to="/" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Home</Link>
-        <Link to="/men" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Men</Link>
-        <Link to="/women" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Women</Link>
-        <Link to="/children" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Children</Link>
+        {/* ✅ Apply same styling everywhere */}
+        <Link
+          to="/login"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
+          Login
+        </Link>
 
-        {/* 🛒 Cart with count */}
-        <Link to="/cart" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+        <Link
+          to="/signup"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
+          Signup
+        </Link>
+
+        <Link
+          to="/"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
+          Home
+        </Link>
+
+        <Link
+          to="/men"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
+          Men
+        </Link>
+
+        <Link
+          to="/women"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
+          Women
+        </Link>
+
+        <Link
+          to="/children"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
+          Children
+        </Link>
+
+        {/* 🛒 Cart */}
+        <Link
+          to="/cart"
+          style={styles.link}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
           Cart
           {cart.length > 0 && (
             <span style={styles.cartBadge}>{cart.length}</span>

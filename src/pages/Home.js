@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Home = () => {
+  const navigate = useNavigate(); // ✅ routing
+  const { addToCart } = useCart(); // ✅ cart
+
   const styles = {
     hero: {
       position: "relative",
@@ -56,10 +61,29 @@ const Home = () => {
     },
   };
 
+  // ✅ Trending products data
+  const trending = [
+    {
+      name: "Stylish Jacket",
+      price: 2200,
+      image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b",
+    },
+    {
+      name: "Casual T-Shirt",
+      price: 800,
+      image: "https://images.unsplash.com/photo-1520975916090-3105956dac38",
+    },
+    {
+      name: "Denim Jeans",
+      price: 1500,
+      image: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb",
+    },
+  ];
+
   return (
     <div style={{ fontFamily: "Arial, sans-serif" }}>
 
-      {/* HERO SECTION */}
+      {/* HERO */}
       <div style={styles.hero}>
         <img
           src="https://images.unsplash.com/photo-1521334884684-d80222895322"
@@ -71,14 +95,21 @@ const Home = () => {
             Style That Defines You
           </h1>
           <p>Discover the latest trends in fashion</p>
-          <button style={styles.button}>Shop Now</button>
+
+          {/* ✅ GO TO WOMEN PAGE */}
+          <button
+            style={styles.button}
+            onClick={() => navigate("/women")}
+          >
+            Shop Now
+          </button>
         </div>
       </div>
 
-      {/* CATEGORY SECTION */}
+      {/* CATEGORY */}
       <h2 style={styles.sectionTitle}>Shop By Category</h2>
       <div style={styles.flexRow}>
-        <div style={styles.card}>
+        <div style={styles.card} onClick={() => navigate("/men")}>
           <img
             src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
             alt="men"
@@ -87,7 +118,7 @@ const Home = () => {
           <h3>Men</h3>
         </div>
 
-        <div style={styles.card}>
+        <div style={styles.card} onClick={() => navigate("/women")}>
           <img
             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d"
             alt="women"
@@ -96,7 +127,7 @@ const Home = () => {
           <h3>Women</h3>
         </div>
 
-        <div style={styles.card}>
+        <div style={styles.card} onClick={() => navigate("/children")}>
           <img
             src="https://images.unsplash.com/photo-1517841905240-472988babdf9"
             alt="kids"
@@ -106,35 +137,24 @@ const Home = () => {
         </div>
       </div>
 
-      {/* TRENDING PRODUCTS */}
+      {/* TRENDING */}
       <h2 style={styles.sectionTitle}>Trending Now</h2>
       <div style={styles.flexRow}>
-        <div style={styles.productCard}>
-          <img
-            src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b"
-            alt="jacket"
-            style={styles.image}
-          />
-          <p>Stylish Jacket</p>
-        </div>
+        {trending.map((item, i) => (
+          <div key={i} style={styles.productCard}>
+            <img src={item.image} alt={item.name} style={styles.image} />
+            <p>{item.name}</p>
+            <p>₹{item.price}</p>
 
-        <div style={styles.productCard}>
-          <img
-            src="https://images.unsplash.com/photo-1520975916090-3105956dac38"
-            alt="tshirt"
-            style={styles.image}
-          />
-          <p>Casual T-Shirt</p>
-        </div>
-
-        <div style={styles.productCard}>
-          <img
-            src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb"
-            alt="jeans"
-            style={styles.image}
-          />
-          <p>Denim Jeans</p>
-        </div>
+            {/* ✅ ADD TO CART WORKING */}
+            <button
+              style={styles.button}
+              onClick={() => addToCart(item)}
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
       </div>
 
     </div>

@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
+  const { cart } = useCart(); // ✅ get cart
+
   const styles = {
     nav: {
       display: "flex",
@@ -17,20 +20,26 @@ const Navbar = () => {
     logo: {
       fontSize: "1.8rem",
       fontWeight: "bold",
-      letterSpacing: "1px",
     },
     links: {
       display: "flex",
       gap: "25px",
+      alignItems: "center",
     },
     link: {
       textDecoration: "none",
       color: "white",
       fontSize: "1rem",
-      fontWeight: "500",
       padding: "5px 10px",
       borderRadius: "5px",
       transition: "all 0.3s ease",
+    },
+    cartBadge: {
+      background: "#ff3f6c",
+      borderRadius: "50%",
+      padding: "3px 8px",
+      fontSize: "0.8rem",
+      marginLeft: "5px",
     },
   };
 
@@ -46,25 +55,21 @@ const Navbar = () => {
 
   return (
     <nav style={styles.nav}>
-      {/* LOGO */}
       <h2 style={styles.logo}>Clothing Store</h2>
 
-      {/* NAV LINKS */}
       <div style={styles.links}>
-        {["/", "/men", "/women", "/children", "/cart"].map((path, i) => {
-          const names = ["Home", "Men", "Women", "Children", "Cart"];
-          return (
-            <Link
-              key={i}
-              to={path}
-              style={styles.link}
-              onMouseEnter={handleHover}
-              onMouseLeave={handleLeave}
-            >
-              {names[i]}
-            </Link>
-          );
-        })}
+        <Link to="/" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Home</Link>
+        <Link to="/men" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Men</Link>
+        <Link to="/women" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Women</Link>
+        <Link to="/children" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>Children</Link>
+
+        {/* 🛒 Cart with count */}
+        <Link to="/cart" style={styles.link} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+          Cart
+          {cart.length > 0 && (
+            <span style={styles.cartBadge}>{cart.length}</span>
+          )}
+        </Link>
       </div>
     </nav>
   );

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useCart } from "../context/CartContext"; // ✅ IMPORT
 
 const Women = () => {
   const [search, setSearch] = useState("");
+
+  const { addToCart } = useCart(); // ✅ GET FUNCTION
 
   const products = [
     {
@@ -128,7 +131,15 @@ const Women = () => {
               <div style={styles.content}>
                 <h3>{p.name}</h3>
                 <p style={styles.price}>₹{p.price}</p>
-                <button style={styles.button}>Add to Cart</button>
+
+                {/* ✅ FIXED BUTTON */}
+                <button
+                  style={styles.button}
+                  onClick={() => addToCart(p)}
+                >
+                  Add to Cart
+                </button>
+
               </div>
             </div>
           ))}

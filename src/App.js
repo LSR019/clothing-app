@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Men from "./pages/Men";
 import Women from "./pages/Women";
 import Children from "./pages/Children";
-import Cart from "./pages/Cart";
+import Cart from "./components/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 

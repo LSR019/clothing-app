@@ -1,10 +1,9 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import Cart from './pages/Cart.js';
 
 const Cart = () => {
-  const { cart } = useCart();
+  const { cart, removeFromCart } = useCart(); // ✅ added remove
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
@@ -64,6 +63,15 @@ const Cart = () => {
       marginTop: "5px",
       fontWeight: "bold",
     },
+    removeBtn: {
+      marginTop: "8px",
+      padding: "6px 10px",
+      background: "#333",
+      color: "white",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+    },
     button: {
       marginTop: "20px",
       width: "100%",
@@ -93,7 +101,6 @@ const Cart = () => {
         <p style={styles.empty}>Your cart is empty 😢</p>
       ) : (
         <div style={styles.layout}>
-          {/* LEFT: ITEMS */}
           <div style={styles.itemsSection}>
             {cart.map((item, index) => (
               <div key={index} style={styles.card}>
@@ -109,12 +116,19 @@ const Cart = () => {
                 <div style={styles.details}>
                   <p style={styles.name}>{item.name}</p>
                   <p style={styles.price}>₹{item.price}</p>
+
+                  {/* ✅ REMOVE BUTTON */}
+                  <button
+                    style={styles.removeBtn}
+                    onClick={() => removeFromCart(index)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* RIGHT: SUMMARY */}
           <div style={styles.summarySection}>
             <h3>Price Details</h3>
             <p>Total Items: {cart.length}</p>

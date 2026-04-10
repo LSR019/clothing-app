@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -11,7 +12,6 @@ import Checkout from "./pages/Checkout";
 
 import { CartProvider } from "./context/CartContext";
 
-import "./App.css";  
 
 function App() {
   return (

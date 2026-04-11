@@ -63,13 +63,16 @@ export const CartProvider = ({ children }) => {
   };
 
   // 🧾 PLACE ORDER
- const placeOrder = () => {
+const placeOrder = () => {
   setOrders((prev) => [
     ...prev,
-    { items: cart, date: new Date() }
+    {
+      items: cart,
+      date: new Date().toISOString(), // ✅ SAFE DATE
+    },
   ]);
 
-  setCart([]); // ✅ clear cart
+  setCart([]);
 };
 
   return (

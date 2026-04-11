@@ -2,6 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useCart } from "../context/CartContext";
 
+import { useCart } from "../context/CartContext";
+
+const { addToWishlist } = useCart();
+
+<button onClick={() => addToWishlist(p)}>
+  ❤️ Wishlist
+</button>
+
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
 

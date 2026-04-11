@@ -4,24 +4,83 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-  // ✅ Add to cart
+  // 🛒 ADD TO CART (with quantity)
   const addToCart = (item) => {
-    console.log("Adding:", item);
-    setCart((prev) => [...prev, item]);
+    const exist = cart.find((i) => i.name === item.name);
+
+    if (exist) {
+      setCart(
+        cart.map((i) =>
+          i.name === item.name
+            ? { ...i, qty: i.qty + 1 }
+            : i
+        )
+      );
+    } else {
+      setCart([...cart, { ...item, qty: 1 }]);
+    }
   };
 
-  // ✅ Remove from cart
-  const removeFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
+  // ❌ REMOVE ITEM
+  const removeFromCart = (name) => {
+    setCart(cart.filter((item) => item.name !== name));
+  };
+
+  // ➕ INCREASE QTY
+  const increaseQty = (name) => {
+    setCart(
+      cart.map((item) =>
+        item.name === name
+          ? { ...item, qty: item.qty + 1 }
+          : item
+      )
+    );
+  };
+
+  // ➖ DECREASE QTY
+  const decreaseQty = (name) => {
+    setCart(
+      cart.map((item) =>
+        item.name === name && item.qty > 1
+          ? { ...item, qty: item.qty - 1 }
+          : item
+      )
+    );
+  };
+
+  // ❤️ WISHLIST
+  const addToWishlist = (item) => {
+    if (!wishlist.find((i) => i.name === item.name)) {
+      setWishlist([...wishlist, item]);
+    }
+  };
+
+  const removeFromWishlist = (name) => {
+    setWishlist(wishlist.filter((i) => i.name !== name));
+  };
+
+  // 🧾 PLACE ORDER
+  const placeOrder = () => {
+    setOrders([...orders, { items: cart, date: new Date() }]);
+    setCart([]);
   };
 
   return (
     <CartContext.Provider
       value={{
         cart,
+        wishlist,
+        orders,
         addToCart,
-        removeFromCart, // ✅ IMPORTANT: include this
+        removeFromCart,
+        increaseQty,
+        decreaseQty,
+        addToWishlist,
+        removeFromWishlist,
+        placeOrder,
       }}
     >
       {children}
@@ -29,5 +88,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// ✅ Custom hook
 export const useCart = () => useContext(CartContext);

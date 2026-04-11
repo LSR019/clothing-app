@@ -11,6 +11,9 @@ import Children from "./pages/Children";
 import Cart from "./components/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
+import Wishlist from "./pages/Wishlist";
+import Orders from "./pages/Orders";
+
 
 function App() {
   return (
@@ -26,6 +29,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
 <Route path="/signup" element={<Signup />} />
+<Route path="/wishlist" element={<Wishlist />} />
+<Route path="/orders" element={<Orders />} />
         </Routes>
 
       </Router>

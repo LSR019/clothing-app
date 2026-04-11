@@ -63,10 +63,14 @@ export const CartProvider = ({ children }) => {
   };
 
   // 🧾 PLACE ORDER
-  const placeOrder = () => {
-    setOrders([...orders, { items: cart, date: new Date() }]);
-    setCart([]);
-  };
+ const placeOrder = () => {
+  setOrders((prev) => [
+    ...prev,
+    { items: cart, date: new Date() }
+  ]);
+
+  setCart([]); // ✅ clear cart
+};
 
   return (
     <CartContext.Provider
